@@ -35,18 +35,35 @@ public class Main {
                         }
                     }
                     System.out.println(subDir.getName()+":");
-                    Set<String> uniqueSet = new HashSet<>(occurrencesForMonth);
-                    for (String temp : uniqueSet) {
-                        System.out.println(temp + " x" + Collections.frequency(occurrencesForMonth, temp));
+
+                    Map<String, Integer> sortedOccurrencesForMonth = new HashMap<String, Integer>();
+                    for (String temp : occurrencesForMonth) {
+                        Integer count = sortedOccurrencesForMonth.get(temp);
+                        sortedOccurrencesForMonth.put(temp, (count == null) ? 1 : count + 1);
                     }
+                    Map<String, Integer> treeMapMonthOcc = new TreeMap<String, Integer>(sortedOccurrencesForMonth);
+                    printMap(treeMapMonthOcc);
+//                    Set<String> uniqueSet = new HashSet<>(occurrencesForMonth);
+//                    for (String temp : uniqueSet) {
+//                        System.out.println(temp + " x" + Collections.frequency(occurrencesForMonth, temp));
+//                    }
                     System.out.println("\n\n\n");
                     summary.addAll(occurrencesForMonth);
                 }
                 System.out.println("Сумма:");
-                Set<String> uniqueSet = new HashSet<>(summary);
-                for (String temp : uniqueSet) {
-                    System.out.println(temp + " x" + Collections.frequency(summary, temp));
+                Map<String, Integer> sortedSummary = new HashMap<String, Integer>();
+                for (String temp : summary) {
+                    Integer count = sortedSummary.get(temp);
+                    sortedSummary.put(temp, (count == null) ? 1 : count + 1);
                 }
+                Map<String, Integer> treeMapSummary = new TreeMap<String, Integer>(sortedSummary);
+                printMap(treeMapSummary);
+
+
+//                Set<String> uniqueSet = new HashSet<>(summary);
+//                for (String temp : uniqueSet) {
+//                    System.out.println(temp + " x" + Collections.frequency(summary, temp));
+//                }
             } catch (Exception e) {
                 System.err.println("Argument" + args[0] + " is not a valid directory. \n Or java doesn't think so");
                 e.printStackTrace();
@@ -77,6 +94,15 @@ public class Main {
         } else {
             return x;
         }
+    }
+
+    public static void printMap(Map<String, Integer> map){
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " x"
+                    + entry.getValue());
+        }
+
     }
 }
 
